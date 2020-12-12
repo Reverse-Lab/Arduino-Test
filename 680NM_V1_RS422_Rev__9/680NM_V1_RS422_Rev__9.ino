@@ -55,7 +55,7 @@ void setup() {
   FX1S_construct(FX1Spacket5, FX1S_READ_D, 16, 1, FX1SreadD_5);
   FX1S_configure(&Serial1, FX1Sbaud, FX1Sformat, FX1Stimeout, FX1Spackets, FX1STOTAL_NO_OF_PACKETS);
   
-  pinMode(buzzer_pin, OUTPUT);
+  pinMode (buzzer_pin, OUTPUT);
   pinMode (lcdPSB_pin, OUTPUT) ;
   digitalWrite (lcdPSB_pin, HIGH); // GLCD HIGH : Data Mode, LOW : SPI Mode
   HT.begin(0x70); 
@@ -238,5 +238,4 @@ void loop() {
       } lastkey = key;
     } 
   }
-  //Serial.println (D10);
 }
