@@ -105,7 +105,7 @@ void loop() {
       
       u8g.setFont(u8g_font_fub17n);  //17Pixel
       u8g.setPrintPos( 62, 19);
-      u8g.printf("%05d\n", D9);
+      u8g.printf("%05d\n", D10);
       u8g.setFont(u8g_font_lucasfont_alternater); // 7Pixel
       u8g.drawStr( 9, 9, "WORK");
       u8g.drawStr( 1, 19, "COUNTER");
