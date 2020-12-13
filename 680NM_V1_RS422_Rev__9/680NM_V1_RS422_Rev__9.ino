@@ -98,13 +98,14 @@ void loop() {
   
   unsigned long reflash_Time = 1300;
   
-  if (D9 == 2) {                // D9 : 페이지 선택
+  if (D9 == 1 || D9 == 2 || D9 == 4 ) {                // D9 : 페이지 선택
     if ((millis() - lcd_Time >= reflash_Time)) {    
     u8g.firstPage();  
     do {    
+      
       u8g.setFont(u8g_font_fub17n);  //17Pixel
       u8g.setPrintPos( 62, 19);
-      u8g.printf("%05d\n", D10);
+      u8g.printf("%05d\n", D9);
       u8g.setFont(u8g_font_lucasfont_alternater); // 7Pixel
       u8g.drawStr( 9, 9, "WORK");
       u8g.drawStr( 1, 19, "COUNTER");
@@ -120,10 +121,17 @@ void loop() {
       u8g.drawStr( 1, 62, "POSITION DATA");
       u8g.setPrintPos( 85, 62);
       u8g.printf("%03d\n",d_D4);u8g.print(".");u8g.printf("%01d\n",f_D4);u8g.print("mm");
+      
+      switch (D9) {
+        case 1: u8g.drawStr( 88, 33, ">"); break;   // AUTO CYCLE TIME
+        case 2: u8g.drawStr( 33, 47, ">"); break;   // FRONT
+        case 4: u8g.drawStr( 100, 47, ">"); break;  // REAR
+        default : break; }
+      
       } while( u8g.nextPage() ); lcd_Time = millis();
     } 
   }
-  if (D9 == 3200) {
+  if (D9 == 3080 || D9 == 3088 || D9 == 3104 || D9 == 3136 || D9 == 3200) {
     if((millis() - lcd_Time >= reflash_Time)) {
       u8g.firstPage();  
       do {
@@ -131,6 +139,8 @@ void loop() {
       u8g.drawStr( 1, 9, "SQEEZE ON TIME");
       u8g.setPrintPos( 101, 9);
       u8g.printf("%02d\n",d_D5);u8g.print(".");u8g.printf("%01d\n",f_D5);u8g.print("s");
+      // u8g.setPrintPos( 1, 16);
+      // u8g.print("D9 : "); u8g.printf("%05d\n", D9);
       u8g.drawStr( 1, 25, "MODE SELECT");
       u8g.setPrintPos( 91, 25);
       u8g.printf("%01d\n", D7);u8g.print(" Mode");
@@ -143,6 +153,15 @@ void loop() {
       u8g.drawStr( 1, 62, "VACUUM OFF TIME");
       u8g.setPrintPos( 101, 62);
       u8g.printf("%02d\n",d_D16);u8g.print(".");u8g.printf("%01d\n",f_D16);u8g.print("s");
+      
+      switch (D9) {
+        case 3080: u8g.drawStr( 94, 62, ">"); break;  // VACUUM OFF
+        case 3088: u8g.drawStr( 94, 9, ">"); break;  // SQEEZE ON TIME
+        case 3104: u8g.drawStr( 94, 51, ">"); break; // VACUUM  ON TIME
+        case 3136: u8g.drawStr( 84, 25, ">"); break;  // MODE SELECT
+        case 3200: u8g.drawStr( 84, 36, ">"); break; // CYCLE MODE
+        default : break; }
+        
       } while( u8g.nextPage() ); lcd_Time = millis();
     } 
   }
