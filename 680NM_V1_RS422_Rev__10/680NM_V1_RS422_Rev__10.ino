@@ -97,7 +97,7 @@ void loop() {
   int d_D6 = D6*0.1; int f_D6 = D6-(d_D6*10); // 진공 ON 시간
   int d_D16 = D16*0.1; int f_D16 = D16-(d_D16*10); // 진공 OFF 시간
   
-  unsigned long reflash_Time = 1300;
+  unsigned long reflash_Time = 405;
   
   if (D9 == 1 || D9 == 2 || D9 == 4 ) {                // D9 : 페이지 선택
     if ((millis() - lcd_Time >= reflash_Time)) {    
