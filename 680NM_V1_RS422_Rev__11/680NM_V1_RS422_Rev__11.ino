@@ -75,8 +75,8 @@ void loop() {
   unsigned int D9 = FX1SreadD_4[0]  ;unsigned int D10 = FX1SreadD_4[1]; unsigned int D16 = FX1SreadD_5[0];
   
     if (bitRead(D10, 0))  HT.setLedNow(39); else HT.clearLedNow(39); // 판들림
-    if (bitRead(D10, 1))  HT.setLedNow(23); else HT.clearLedNow(23); //
-    if (bitRead(D10, 2))  HT.setLedNow(22); else HT.clearLedNow(22); //
+    if (bitRead(D10, 1))  HT.setLedNow(23); else HT.clearLedNow(23); // 상승/하강
+    if (bitRead(D10, 2))  HT.setLedNow(22); else HT.clearLedNow(22); // 인쇄 시작/종료
     if (bitRead(D10, 3))  HT.setLedNow(55); else HT.clearLedNow(55); // 뒤쪽위치 설정
     if (bitRead(D10, 4))  HT.setLedNow(21); else HT.clearLedNow(21); // 스퀴즈
     if (bitRead(D10, 5))  HT.setLedNow(38); else HT.clearLedNow(38); // Option
@@ -86,8 +86,8 @@ void loop() {
     if (bitRead(D10, 9))  HT.setLedNow(52); else HT.clearLedNow(52); // 앞쪽위치 설정
     if (bitRead(D10, 10)) HT.setLedNow(19); else HT.clearLedNow(19);  // 자동
     if (bitRead(D10, 11)) HT.setLedNow(35); else HT.clearLedNow(35);  // 전인쇄
-    if (bitRead(D10, 12)) HT.setLedNow(50); else HT.clearLedNow(50);  // 
-    //if (bitRead(D10, 13)) HT.setLedNow(51); else HT.clearLedNow(51);  // 작업수량 지움
+    if (bitRead(D10, 12)) HT.setLedNow(51); else HT.clearLedNow(51);  // 작업수량 지움
+    if (bitRead(D10, 13)) HT.setLedNow(50); else HT.clearLedNow(50);  // 원점
     if (bitRead(D10, 14)) HT.setLedNow(34); else HT.clearLedNow(34);  // 진공모터
     if (bitRead(D10, 15)) HT.setLedNow(18); else HT.clearLedNow(18);  // 반자동
   
@@ -106,7 +106,7 @@ void loop() {
       
       u8g.setFont(u8g_font_fub17n);  //17Pixel
       u8g.setPrintPos( 62, 19);
-      u8g.printf("%05d\n", D10);
+      u8g.printf("%05d\n", D0);
       u8g.setFont(u8g_font_lucasfont_alternater); // 7Pixel
       u8g.drawStr( 9, 9, "WORK");
       u8g.drawStr( 1, 19, "COUNTER");
@@ -239,17 +239,17 @@ void loop() {
         case  32: while(!(UCSR1A&(1<<UDRE1))); Serial1.print(String("101000208001F")); Serial1.flush();  // 뒤쪽위치 설정
                   press_Time = millis(); key_Flag = 100; break;
         
-        case  31: while(!(UCSR1A&(1<<UDRE1))); Serial1.print(String("101000240001B")); Serial1.flush(); //뒤로(좌로)
-                  press_Time = millis(); key_Flag = 100; break;
+        case  31: while(!(UCSR1A&(1<<UDRE1))); Serial1.print(String("101000240001B")); Serial1.flush(); HT.setLedNow(54); break;//뒤로(좌로)
+        case -31: press_Time = millis(); key_Flag = 100; HT.clearLedNow(54); break;
        
-        case  30: while(!(UCSR1A&(1<<UDRE1))); Serial1.print(String("1010002020019")); Serial1.flush(); // 앞으로(우로)
-                  press_Time = millis(); key_Flag = 100; break;
+        case  30: while(!(UCSR1A&(1<<UDRE1))); Serial1.print(String("1010002020019")); Serial1.flush(); HT.setLedNow(53); break;// 앞으로(우로)
+        case -30: press_Time = millis(); key_Flag = 100; HT.clearLedNow(53); break;
         
         case  29: while(!(UCSR1A&(1<<UDRE1))); Serial1.print(String("101000204001B")); Serial1.flush();  // 앞쪽위치 설정
                   press_Time = millis(); key_Flag = 100; break;
         
-        case  28: while(!(UCSR1A&(1<<UDRE1))); Serial1.print(String("1010002000118")); Serial1.flush(); HT.setLedNow(51); break; // 작업수량 지움
-        case -28: while(!(UCSR1A&(1<<UDRE1))); Serial1.print(String("1010002000019")); Serial1.flush(); HT.clearLedNow(51); break;
+        case  28: while(!(UCSR1A&(1<<UDRE1))); Serial1.print(String("1010002000118")); Serial1.flush(); HT.setLedNow(51); // 작업수량 지움
+                  press_Time = millis(); key_Flag = 100; break;
         
         case  27: while(!(UCSR1A&(1<<UDRE1))); Serial1.print(String("101000200081F")); Serial1.flush(); // 운전 준비
                   press_Time = millis(); key_Flag = 100; break;
